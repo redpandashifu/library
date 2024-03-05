@@ -11,9 +11,6 @@ import org.example.library.repositories.BookRepository;
 @SpringBootApplication(scanBasePackages = {"org.example.library"})
 public class Main {
 
-  @Autowired
-  private BookRepository bookRepository;
-
   public static void main(String[] args) {
     SpringApplication.run(Main.class, args);
   }

@@ -4,10 +4,10 @@ import java.util.Set;
 
 public class BookDTO {
 
-  private Long id;
-  private String title;
-  private Set<Long> authorIds;
-  private Integer published;
+  private final Long id;
+  private final String title;
+  private final Set<Long> authorIds;
+  private final Integer published;
 
   public BookDTO(Long id, String title, Set<Long> authorIds, Integer published) {
     this.id = id;

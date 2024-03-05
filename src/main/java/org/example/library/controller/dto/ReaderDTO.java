@@ -5,12 +5,12 @@ import org.example.library.entities.Gender;
 
 public class ReaderDTO {
 
-  private Long id;
-  private String firstName;
-  private String middleName;
-  private String lastName;
-  private Gender gender;
-  private LocalDate birthday;
+  private final Long id;
+  private final String firstName;
+  private final String middleName;
+  private final String lastName;
+  private final Gender gender;
+  private final LocalDate birthday;
 
   public ReaderDTO(long id, String firstName, String middleName, String lastName, Gender gender,
       LocalDate birthday) {

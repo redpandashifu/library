@@ -1,9 +1,9 @@
 package org.example.library.controller.dto;
 
 public class AuthorDTO {
-  private Long id;
-  private String firstName;
-  private String lastName;
+  private final Long id;
+  private final String firstName;
+  private final String lastName;
 
   public AuthorDTO(Long id, String firstName, String lastName) {
     this.id = id;
