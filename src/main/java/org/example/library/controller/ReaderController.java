@@ -3,7 +3,7 @@ package org.example.library.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.example.library.controller.converter.ReaderConverter;
-import org.example.library.controller.dto.ErrorDto;
+import org.example.library.controller.dto.ErrorDTO;
 import org.example.library.controller.dto.ReaderDTO;
 import org.example.library.entities.Reader;
 import org.example.library.service.NotFoundException;
@@ -44,10 +44,10 @@ public class ReaderController {
       }
     } catch (IllegalArgumentException e) {
       LOG.warn("Bad request on reader get, id=" + id, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       LOG.warn("Internal server error on reader get, id=" + id, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -59,10 +59,10 @@ public class ReaderController {
       return new ResponseEntity<>(readerConverter.apply(entity), HttpStatus.OK);
     } catch (IllegalArgumentException e) {
       LOG.warn("Bad request on reader creation, dto=" + dto, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       LOG.warn("Internal server error on reader creation, dto=" + dto, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -73,10 +73,10 @@ public class ReaderController {
       return new ResponseEntity<>("OK", HttpStatus.OK);
     } catch (IllegalArgumentException e) {
       LOG.warn("Bad request on reader delete, id=" + id, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       LOG.warn("Internal server error on reader delete, id=" + id, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }  }
 
   @PutMapping
@@ -90,10 +90,10 @@ public class ReaderController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     } catch (IllegalArgumentException e) {
       LOG.warn("Bad request on reader update, dto=" + dto, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       LOG.warn("Internal server error on reader update, dto=" + dto, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
   @GetMapping("/findByLastName")
@@ -105,10 +105,10 @@ public class ReaderController {
       return new ResponseEntity<>(readerDtos, HttpStatus.OK);
     } catch (IllegalArgumentException e) {
       LOG.warn("Bad request on reader findByLastName, lastName=" + lastName, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       LOG.warn("Internal server error on reader findByLastName, lastName=" + lastName, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

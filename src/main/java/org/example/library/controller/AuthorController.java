@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.example.library.controller.converter.AuthorConverter;
 import org.example.library.controller.dto.AuthorDTO;
-import org.example.library.controller.dto.ErrorDto;
+import org.example.library.controller.dto.ErrorDTO;
 import org.example.library.entities.Author;
 import org.example.library.service.AuthorService;
 import org.example.library.service.NotFoundException;
@@ -39,10 +39,10 @@ public class AuthorController {
       return new ResponseEntity<>(authorConverter.apply(entity), HttpStatus.OK);
     } catch (IllegalArgumentException e) {
       LOG.warn("Bad request on author creation, dto=" + dto, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       LOG.warn("Internal server error on author creation, dto=" + dto, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -57,10 +57,10 @@ public class AuthorController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     } catch (IllegalArgumentException e) {
       LOG.warn("Bad request on author update, dto=" + dto, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       LOG.warn("Internal server error on author update, dto=" + dto, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -75,10 +75,10 @@ public class AuthorController {
       }
     } catch (IllegalArgumentException e) {
       LOG.warn("Bad request on author get, id=" + id, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       LOG.warn("Internal server error on author get, id=" + id, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -89,10 +89,10 @@ public class AuthorController {
       return new ResponseEntity<>("OK", HttpStatus.OK);
     } catch (IllegalArgumentException e) {
       LOG.warn("Bad request on author delete, id=" + id, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       LOG.warn("Internal server error on author delete, id=" + id, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -105,10 +105,10 @@ public class AuthorController {
       return new ResponseEntity<>(authorDtos, HttpStatus.OK);
     } catch (IllegalArgumentException e) {
       LOG.warn("Bad request on author findByLastName, lastName=" + lastName, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       LOG.warn("Internal server error on author findByLastName, lastName=" + lastName, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

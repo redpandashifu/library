@@ -2,7 +2,7 @@ package org.example.library.controller;
 
 import org.example.library.controller.converter.BookConverter;
 import org.example.library.controller.dto.BookDTO;
-import org.example.library.controller.dto.ErrorDto;
+import org.example.library.controller.dto.ErrorDTO;
 import org.example.library.entities.Book;
 import org.example.library.service.BookService;
 import org.example.library.service.NotFoundException;
@@ -38,10 +38,10 @@ public class BookController {
       return new ResponseEntity<>(bookConverter.apply(book), HttpStatus.OK);
     } catch (IllegalArgumentException e) {
       LOG.warn("Bad request on book creation, dto=" + dto, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       LOG.warn("Internal server error on book creation, dto=" + dto, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -56,10 +56,10 @@ public class BookController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     } catch (IllegalArgumentException e) {
       LOG.warn("Bad request on book update, dto=" + dto, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       LOG.warn("Internal server error on book update, dto=" + dto, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -74,10 +74,10 @@ public class BookController {
       }
     } catch (IllegalArgumentException e) {
       LOG.warn("Bad request on book get, id=" + id, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       LOG.warn("Internal server error on book get, id=" + id, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -88,10 +88,10 @@ public class BookController {
       return new ResponseEntity<>("OK", HttpStatus.OK);
     } catch (IllegalArgumentException e) {
       LOG.warn("Bad request on book delete, id=" + id, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       LOG.warn("Internal server error on book delete, id=" + id, e);
-      return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

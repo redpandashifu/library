@@ -9,7 +9,10 @@ import org.springframework.stereotype.Component;
 public class TakenBookConverter implements Function<TakenBook, TakenBookDTO> {
 
   public TakenBookDTO apply(TakenBook entity) {
-    return new TakenBookDTO(entity.getId(), entity.getReader().getId(), entity.getBook().getId(),
-        entity.getDateFrom(), entity.getDateTo());
+    return new TakenBookDTO(entity.getId(),
+        entity.getReader().getId(),
+        entity.getBook().getId(),
+        entity.getDateFrom(),
+        entity.getDateTo());
   }
 }
