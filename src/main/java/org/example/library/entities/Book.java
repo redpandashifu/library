@@ -42,6 +42,10 @@ public class Book {
         this.published = other.published;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

@@ -15,6 +15,10 @@ public class AuthorService {
   @Autowired
   private AuthorRepository authorRepository;
 
+  public AuthorService(AuthorRepository authorRepository) {
+    this.authorRepository = authorRepository;
+  }
+
   @Transactional
   public Author createAuthor(String firstName, String lastName) {
     try {
@@ -28,6 +32,8 @@ public class AuthorService {
   @Transactional
   public Author updateAuthor(Long id, String firstName, String lastName) {
     try {
+      validate(firstName, lastName);
+
       if (id == null) {
         throw new IllegalArgumentException("Author id is not specified");
       }
@@ -36,7 +42,6 @@ public class AuthorService {
         throw new NotFoundException("Author with id=" + id + " doesn't exist");
       }
 
-      validate(firstName, lastName);
       Author author = optionalAuthor.get();
       author.setFirstName(firstName);
       author.setLastName(lastName);

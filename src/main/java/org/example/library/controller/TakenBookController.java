@@ -103,7 +103,7 @@ public class TakenBookController {
   public ResponseEntity<Object> getTakenBooksByPeriod(@RequestParam("readerId") long readerId,
       @RequestParam("from") LocalDate dateFrom, @RequestParam("to") LocalDate dateTo) {
     try {
-      List<TakenBook> takenBooks = takenBookService.findByPeriod(readerId, dateFrom, dateTo);
+      List<TakenBook> takenBooks = takenBookService.findByReaderAndPeriod(readerId, dateFrom, dateTo);
       return new ResponseEntity<>(
           takenBooks.stream().map(takenBookConverter).collect(Collectors.toList()), HttpStatus.OK);
     } catch (IllegalArgumentException e) {

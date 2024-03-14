@@ -1,5 +1,6 @@
 package org.example.library.service;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +27,13 @@ public class BookService {
   @Autowired
   private AuthorRepository authorRepository;
 
+  public BookService(BookRepository bookRepository, AuthorRepository authorRepository) {
+    this.bookRepository = bookRepository;
+    this.authorRepository = authorRepository;
+  }
+
   @Transactional
-  public Book createBook(String title, Integer published, Set<Long> authorIds) {
+  public Book createBook(String title, Set<Long> authorIds, Integer published) {
     try {
       validate(title, published);
       List<Author> authors = validateAndGetAuthors(authorIds);
@@ -38,19 +44,19 @@ public class BookService {
   }
 
   @Transactional
-  public Book updateBook(Long id, String title, Integer published, Set<Long> authorIds) {
+  public Book updateBook(Long id, String title, Set<Long> authorIds, Integer published) {
     try {
       if (id == null) {
         throw new IllegalArgumentException("Book id is not specified");
       }
+      validate(title, published);
+
       Optional<Book> optionalBook = bookRepository.findById(id);
       if (!optionalBook.isPresent()) {
         throw new NotFoundException("Book with id=" + id + " doesn't exist");
       }
 
-      validate(title, published);
       List<Author> authors = validateAndGetAuthors(authorIds);
-
       Book book = optionalBook.get();
       book.setTitle(title);
       book.setPublished(published);
@@ -82,6 +88,14 @@ public class BookService {
     }
   }
 
+  @Transactional
+  public List<Book> findByTitle(String title) {
+    if (title == null || title.isEmpty()) {
+      throw new IllegalArgumentException("Title is not specified");
+    }
+    return bookRepository.findByTitle(title);
+  }
+
   private void validate(String title, Integer published) {
     if (title == null || title.isEmpty()) {
       throw new IllegalArgumentException("Book title is null or empty");
@@ -91,6 +105,9 @@ public class BookService {
     }
     if (published < 0) {
       throw new IllegalArgumentException("Book published year is below zero");
+    }
+    if (published > Year.now().getValue()) {
+      throw new IllegalArgumentException("Book published year is greater than current");
     }
   }
 

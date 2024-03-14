@@ -50,6 +50,10 @@ public class Reader {
     this(reader.firstName, reader.middleName, reader.lastName, reader.gender, reader.birthday);
   }
 
+  public void setId(Long id) {
+    this.id = id;
+  }
+
   public Long getId() {
     return id;
   }

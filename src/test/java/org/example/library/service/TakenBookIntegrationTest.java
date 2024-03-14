@@ -1,17 +1,14 @@
-package org.example.library;
+package org.example.library.service;
 
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import org.example.library.Main;
 import org.example.library.entities.Author;
 import org.example.library.entities.Book;
 import org.example.library.entities.Gender;
 import org.example.library.entities.Reader;
 import org.example.library.entities.TakenBook;
-import org.example.library.service.AuthorService;
-import org.example.library.service.BookService;
-import org.example.library.service.ReaderService;
-import org.example.library.service.TakenBookService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Main.class)
-public class TakenBookServiceTest {
+public class TakenBookIntegrationTest {
   @Autowired
   private BookService bookService;
 
@@ -42,8 +39,8 @@ public class TakenBookServiceTest {
     Assert.assertEquals("Astrid", author.getFirstName());
     Assert.assertEquals("Lindgren", author.getLastName());
 
-    Book book = bookService.createBook("Pippi Longstocking", 1945,
-        Collections.singleton(author.getId()));
+    Book book = bookService.createBook("Pippi Longstocking",
+        Collections.singleton(author.getId()), 1945);
     Assert.assertNotNull(book);
     Assert.assertNotNull(book.getId());
     Assert.assertEquals("Pippi Longstocking", book.getTitle());
@@ -60,7 +57,7 @@ public class TakenBookServiceTest {
     Assert.assertEquals(LocalDate.of(2000, 2, 14), reader.getBirthday());
 
     TakenBook takenBook = takenBookService.createTakenBook(reader.getId(), book.getId(),
-        LocalDate.of(2024, 3, 3), null);
+        LocalDate.of(2024, 3, 3), LocalDate.of(2024, 4, 3));
     Assert.assertNotNull(takenBook);
     Assert.assertNotNull(takenBook.getId());
     Assert.assertNotNull(takenBook.getBook());
@@ -68,9 +65,9 @@ public class TakenBookServiceTest {
     Assert.assertNotNull(takenBook.getReader());
     Assert.assertEquals(reader.getId(), takenBook.getReader().getId());
     Assert.assertEquals(LocalDate.of(2024, 3, 3), takenBook.getDateFrom());
-    Assert.assertNull(takenBook.getDateTo());
+    Assert.assertEquals(LocalDate.of(2024, 4, 3), takenBook.getDateTo());
 
-    List<TakenBook> takenBooks = takenBookService.findByPeriod(reader.getId(), LocalDate.of(2024, 3, 1),
+    List<TakenBook> takenBooks = takenBookService.findByReaderAndPeriod(reader.getId(), LocalDate.of(2024, 3, 1),
         LocalDate.of(2024, 3, 5));
     Assert.assertNotNull(takenBooks);
     Assert.assertEquals(1, takenBooks.size());
@@ -82,9 +79,9 @@ public class TakenBookServiceTest {
     Assert.assertNotNull(takenBook.getReader());
     Assert.assertEquals(reader.getId(), takenBook.getReader().getId());
     Assert.assertEquals(LocalDate.of(2024, 3, 3), takenBook.getDateFrom());
-    Assert.assertNull(takenBook.getDateTo());
+    Assert.assertEquals(LocalDate.of(2024, 4, 3), takenBook.getDateTo());
 
-    takenBooks = takenBookService.findByPeriod(reader.getId(), LocalDate.of(2024, 3, 5),
+    takenBooks = takenBookService.findByReaderAndPeriod(reader.getId(), LocalDate.of(2024, 3, 5),
         LocalDate.of(2024, 3, 10));
     Assert.assertNotNull(takenBooks);
     Assert.assertTrue(takenBooks.isEmpty());

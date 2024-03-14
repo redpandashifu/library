@@ -61,7 +61,7 @@
 
 * /takenBook - для выданных читателю книг
 
-> curl -v -X POST http://localhost:8080/library/takenBook -H 'Content-Type: application/json' -d '{"readerId": 3,"bookId": 2, "dateFrom": "2024-03-03","dateTo": null}'
+> curl -v -X POST http://localhost:8080/library/takenBook -H 'Content-Type: application/json' -d '{"readerId": 3,"bookId": 2, "dateFrom": "2024-03-03","dateTo": "2024-04-03"}'
 
 > curl -v -X PUT http://localhost:8080/library/takenBook -H 'Content-Type: application/json' -d '{"id":4,"readerId":3,"bookId":2,"dateFrom":"2024-03-03","dateTo":"2024-03-23"}'
 
@@ -85,5 +85,4 @@
 * Логирование сообщений происходит в консоль.
 
 ## Что еще нужно сделать
-* Добавить юнит тесты для сервисов с mock’ами репозиториев, интеграционные тесты для сервисов.
 * Более понятные сообщения на REST запросы при 4xx и 5xx ошибках

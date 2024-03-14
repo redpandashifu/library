@@ -17,11 +17,15 @@ public class ReaderService {
   @Autowired
   private ReaderRepository readerRepository;
 
+  public ReaderService(ReaderRepository readerRepository) {
+    this.readerRepository = readerRepository;
+  }
+
   @Transactional
   public Reader createReader(String firstName, String middleName, String lastName, Gender gender,
       LocalDate birthday) {
     try {
-      validate(firstName, middleName, lastName, birthday);
+      validate(firstName, middleName, lastName, gender, birthday);
       return readerRepository.saveAndFlush(new Reader(firstName, middleName, lastName, gender, birthday));
     } catch (
         DataIntegrityViolationException ex) {
@@ -41,7 +45,7 @@ public class ReaderService {
         throw new NotFoundException("Reader with id=" + id + " doesn't exist");
       }
 
-      validate(firstName, middleName, lastName, birthday);
+      validate(firstName, middleName, lastName, gender, birthday);
       Reader reader = optionalReader.get();
       reader.setFirstName(firstName);
       reader.setMiddleName(middleName);
@@ -83,7 +87,9 @@ public class ReaderService {
     return readerRepository.findByLastName(lastName);
   }
 
-  private void validate(String firstName, String middleName, String lastName, LocalDate birthday) {
+  private void validate(String firstName, String middleName, String lastName, Gender gender,
+      LocalDate birthday)
+  {
     if (firstName == null || firstName.isEmpty()) {
       throw new IllegalArgumentException("Reader first name is null or empty");
     }
@@ -92,6 +98,9 @@ public class ReaderService {
     }
     if (lastName == null || lastName.isEmpty()) {
       throw new IllegalArgumentException("Reader last name is null or empty");
+    }
+    if (gender == null) {
+      throw new IllegalArgumentException("Reader gender is not specified");
     }
     if (birthday == null) {
       throw new IllegalArgumentException("Reader birthday is not specified");

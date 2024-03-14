@@ -24,6 +24,13 @@ public class TakenBookService {
   @Autowired
   private TakenBookRepository takenBookRepository;
 
+  public TakenBookService(BookRepository bookRepository, ReaderRepository readerRepository,
+      TakenBookRepository takenBookRepository) {
+    this.bookRepository = bookRepository;
+    this.readerRepository = readerRepository;
+    this.takenBookRepository = takenBookRepository;
+  }
+
   @Transactional
   public TakenBook createTakenBook(Long readerId, Long bookId, LocalDate dateFrom,
       LocalDate dateTo) {
@@ -44,19 +51,21 @@ public class TakenBookService {
       if (id == null) {
         throw new IllegalArgumentException("Taken book id is not specified");
       }
+
+      validate(dateFrom, dateTo);
+      Reader reader = validateAndGetReader(readerId);
+      Book book = validateAndGetBook(bookId);
+
       Optional<TakenBook> optionalTakenBook = takenBookRepository.findById(id);
       if (!optionalTakenBook.isPresent()) {
         throw new NotFoundException("Taken book with id=" + id + " doesn't exist");
       }
 
-      validate(dateFrom, dateTo);
       TakenBook takenBook = optionalTakenBook.get();
+      takenBook.setReader(reader);
+      takenBook.setBook(book);
       takenBook.setDateFrom(dateFrom);
       takenBook.setDateTo(dateTo);
-      Reader reader = validateAndGetReader(readerId);
-      takenBook.setReader(reader);
-      Book book = validateAndGetBook(bookId);
-      takenBook.setBook(book);
       return takenBookRepository.saveAndFlush(takenBook);
     } catch(DataIntegrityViolationException ex) {
       throw new IllegalArgumentException(ex.getMessage());
@@ -85,7 +94,7 @@ public class TakenBookService {
   }
 
   @Transactional
-  public List<TakenBook> findByPeriod(Long readerId, LocalDate dateFrom, LocalDate dateTo) {
+  public List<TakenBook> findByReaderAndPeriod(Long readerId, LocalDate dateFrom, LocalDate dateTo) {
     if (dateFrom == null) {
       throw new IllegalArgumentException("Period date from is not specified");
     }
@@ -95,7 +104,9 @@ public class TakenBookService {
     if (!dateTo.isAfter(dateFrom)) {
       throw new IllegalArgumentException("Period date to is not after date from");
     }
-    Reader reader = validateAndGetReader(readerId);
+    if (readerId == null) {
+      throw new IllegalArgumentException("Reader id is not specified");
+    }
     return takenBookRepository.findByReaderAndPeriod(readerId, dateFrom, dateTo);
   }
 
@@ -103,7 +114,10 @@ public class TakenBookService {
     if (dateFrom == null) {
       throw new IllegalArgumentException("Date when book was taken is not specified");
     }
-    if (dateTo != null && !dateTo.isAfter(dateFrom)) {
+    if (dateTo == null) {
+      throw new IllegalArgumentException("Date when book should be returned is not specified");
+    }
+    if (!dateTo.isAfter(dateFrom)) {
       throw new IllegalArgumentException("Date when book is returned is not after taken date");
     }
   }

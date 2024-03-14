@@ -43,6 +43,10 @@ public class TakenBook {
     this.dateTo = dateTo;
   }
 
+  public void setId(Long id) {
+    this.id = id;
+  }
+
   public TakenBook(TakenBook other) {
     this.reader = other.reader;
     this.book = other.book;

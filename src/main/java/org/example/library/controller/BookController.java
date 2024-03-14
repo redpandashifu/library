@@ -34,7 +34,7 @@ public class BookController {
   @PostMapping
   public ResponseEntity<Object> createBook(@RequestBody BookDTO dto) {
     try {
-      Book book = bookService.createBook(dto.getTitle(), dto.getPublished(), dto.getAuthorIds());
+      Book book = bookService.createBook(dto.getTitle(), dto.getAuthorIds(), dto.getPublished());
       return new ResponseEntity<>(bookConverter.apply(book), HttpStatus.OK);
     } catch (IllegalArgumentException e) {
       LOG.warn("Bad request on book creation, dto=" + dto, e);
@@ -48,8 +48,8 @@ public class BookController {
   @PutMapping
   public ResponseEntity<Object> updateBook(@RequestBody BookDTO dto) {
     try {
-      Book updatedBook = bookService.updateBook(dto.getId(), dto.getTitle(), dto.getPublished(),
-          dto.getAuthorIds());
+      Book updatedBook = bookService.updateBook(dto.getId(), dto.getTitle(), dto.getAuthorIds(),
+          dto.getPublished());
       return new ResponseEntity<>(bookConverter.apply(updatedBook), HttpStatus.OK);
     } catch (NotFoundException e) {
       LOG.warn("Not found on book update, dto=" + dto, e);
